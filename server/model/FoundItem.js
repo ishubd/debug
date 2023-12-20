@@ -9,16 +9,24 @@ const FoundItemSchema = new Schema(
       type: String,
       required: true,
     },
+    color: {
+      type: [String],
+      required: true,
+    },
     category: {
       type: [String],
       required: true,
     },
-    description: {
-      type: String,
+    brand: {
+      type: [String],
       required: true,
     },
     date: {
       type: Date,
+      required: true,
+    },
+    description: {
+      type: String,
       required: true,
     },
     created_by: {

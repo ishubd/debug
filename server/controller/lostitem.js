@@ -44,13 +44,15 @@ function calculateCosineSimilarity(text1, text2) {
 
 const create = async (req, res, next) => {
   try {
-    const { name, category, description, date, created_by } = req.body;
+    const { name, color, category, brand, description, date, created_by } = req.body;
 
     const lostItem = await LostItem.create({
       name,
+      color,
       category,
-      description,
+      brand,
       date,
+      description,
       created_by: new ObjectId(),
     });
 
@@ -77,6 +79,36 @@ const create = async (req, res, next) => {
   }
 };
 
+const getRecentLostItems = async (req, res, next) => {
+  try {
+    const recentLostItems = await LostItem.find().sort({ date: -1 }).limit(5);
+
+    const foundItems = await FoundItem.find();
+
+    const results = recentLostItems.map((lostItem) => {
+      const similarityResults = foundItems.map((foundItem) => ({
+        foundItem,
+        similarity: calculateCosineSimilarity(
+          lostItem.description,
+          foundItem.description
+        ),
+      }));
+
+      similarityResults.sort((a, b) => b.similarity - a.similarity);
+
+      return {
+        lostItem,
+        similarityResults,
+      };
+    });
+
+    res.status(200).send(results);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   create,
+  getRecentLostItems,
 };
