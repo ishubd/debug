@@ -1,7 +1,19 @@
+const jwt = require("jsonwebtoken")
+
 function checkAuthentication(req, res, next) {
-  let loggedIn = true;
-  if (loggedIn) {
-    req.user_id = "6578908e7ce04554be24aa41";
+
+  let token = req.headers?.authorization?.split(" ")[1]
+
+  let user = null
+
+  try{
+    user = jwt.verify(token, process.env.JWT_SECRET);
+  }catch(err){
+
+  }
+
+  if (user) {
+    req.user_id = user._id
     next();
   } else {
     res.status(401).send({
@@ -10,4 +22,4 @@ function checkAuthentication(req, res, next) {
   }
 }
 
-module.exports = { checkAuthentication };
+module.exports = { checkAuthentication }

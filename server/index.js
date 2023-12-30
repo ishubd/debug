@@ -4,6 +4,8 @@ const WebSocket = require('ws');
 
 
 require("./config/database");
+require("dotenv").config()
+
 const bodyParser = require("body-parser");
 const lostItemRoutes = require("./routes/lostitem");
 const founditem_routes = require("./routes/founditem");
