@@ -1,6 +1,8 @@
 // controllers/lostitem.js
 const LostItem = require("../model/lostitem")
 const FoundItem = require("../model/FoundItem")
+const path = require("path")
+
 const  {ObjectId} = require("mongoose").Types;
 
 // Tokenize and clean text
@@ -43,6 +45,11 @@ function calculateCosineSimilarity(text1, text2) {
 }
 
 const create = async (req, res, next) => {
+
+// this for uploading image
+
+  req.files.images.mv(path.join(__dirname, '../uploads/' + req.files.images.name))
+
   try {
     const { name, color, category, brand, description, date, created_by } = req.body;
 

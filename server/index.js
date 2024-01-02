@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const WebSocket = require('ws');
+const fileUpload = require("express-fileupload")
 
 
 require("./config/database");
@@ -29,6 +30,10 @@ app.use(
 app.use(bodyParser.json());
 
 app.use(express.json());
+
+// Image upload from npm file-upload
+app.use(fileUpload());
+
 
 app.use("/api/lostitems", lostItemRoutes);
 // Found Items endpoint

@@ -61,6 +61,7 @@
 const FoundItem = require("../model/FoundItem");
 const LostItem = require("../model/lostitem");
 const Joi = require("joi");
+const path = require("path")
 
 // Cosine similarity calculation function
 function cosineSimilarity(vector1, vector2) {
@@ -95,6 +96,15 @@ const index = async (req, res, next) => {
 
 // For creating found items
 const create = async (req, res, next) => {
+  
+// this for uploading image
+
+
+// console.log(req.files)
+
+req.files.images.mv(path.join(__dirname, '../uploads/' + req.files.images.name))
+
+
   // Server side validation
   let { error } = FoundItemSchema.validate(req.body, {
     abortEarly: false,
