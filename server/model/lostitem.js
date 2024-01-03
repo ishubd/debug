@@ -9,7 +9,7 @@ const LostItemSchema = new Schema(
       type: String,
       required: true,
     },
-    image: {
+    images: {
       type: [String],
     },
     color: {

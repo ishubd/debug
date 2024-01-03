@@ -102,8 +102,11 @@ const create = async (req, res, next) => {
 
 // console.log(req.files)
 
-req.files.images.mv(path.join(__dirname, '../uploads/' + req.files.images.name))
+let image_name = Date.now() + req.files.images.name
 
+ await req.files.images.mv(path.join(__dirname, '../uploads/' + image_name))
+
+ let images = image_name
 
   // Server side validation
   let { error } = FoundItemSchema.validate(req.body, {
@@ -122,6 +125,7 @@ req.files.images.mv(path.join(__dirname, '../uploads/' + req.files.images.name))
     let foundItem = await FoundItem.create({
       ...req.body,
       created_by: req.user_id,
+      images
     });
 
     // Example: Calculate cosine similarity with lost items

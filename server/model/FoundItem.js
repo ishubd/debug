@@ -6,11 +6,11 @@ const ObjectId = Schema.ObjectId;
 const FoundItemSchema = new Schema(
   {
     name: {
-      type: String,
+      type: [String],
       required: true,
     },
-    image: {
-      type: [String],
+    images: {
+      type: String,
     },
     color: {
       type: [String],

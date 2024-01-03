@@ -21,6 +21,10 @@ const {
 
 const app = express();
 
+// Making upload folder public to access
+
+app.use(express.static('uploads'))
+
 app.use(
   cors({
     origin: "*",

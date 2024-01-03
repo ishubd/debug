@@ -48,9 +48,13 @@ const create = async (req, res, next) => {
 
 // this for uploading image
 
-  req.files.images.mv(path.join(__dirname, '../uploads/' + req.files.images.name))
+let image_name = Date.now() + req.files.images.name
 
-  try {
+await req.files.images.mv(path.join(__dirname, '../uploads/' + image_name))
+
+ let images = image_name
+ 
+ try {
     const { name, color, category, brand, description, date, created_by } = req.body;
 
     const lostItem = await LostItem.create({
@@ -60,6 +64,7 @@ const create = async (req, res, next) => {
       brand,
       date,
       description,
+      images,
       created_by: new ObjectId(),
     });
 
